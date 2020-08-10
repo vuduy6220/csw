@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>Product</title>
+    <link href="https://unpkg.com/bootstrap@3.4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div class="col-md-6">
+            <h1>Employee</h1>
+            <main id="app">
+                <router-view></router-view>
+            </main>
+        </div>
+    </div>
+
+    <template id="employee-list">
+        <div>
+            <h2>Employee List</h2>
+            <div>
+                <a class="btn btn-default">
+                    <router-link :to="{path: '/add-employee'}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add employee
+                    </router-link>
+                </a>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Salary</th>
+                    <th class="col-sm-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="employee in filteredEmployees">
+                    <td>{{employee.name}}</td>
+                    <td>{{employee.salary}}</td>
+                    <td>
+                        <a class="btn btn-warning btn-xs">
+                            <router-link :to="{name: 'employee-edit',params: {employee_id:employee.id}}">Edit
+                            </router-link>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <template id="employee-add">
+        <div>
+            <h2>Add Employee</h2>
+            <form @onSubmit="addEmployee">
+                <div class="form-group">
+                    <label for="add-name">Name</label>
+                    <input class="form-control" id="add-name" v-model="employee.name" required />
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="add-salary">Salary</label>
+                        <input type="number" class="form-control" id="add-salary" v-model="employee.salary" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a class="btn btn-default">
+                        <router-link to="/">Cancel</router-link>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="employee-edit">
+        <div>
+            <h2>Edit Employee</h2>
+            <form @onSubmit="updateEmployee">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" v-model="employee.name" required />
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="salary">Salary</label>
+                        <input type="number" class="form-control" id="salary" v-model="employee.salary" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a class="btn btn-default">
+                        <router-link to="/">Cancel</router-link>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <script src="https://unpkg.com/vue@2.5.22/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="./employee.js"></script>
+</body>
+</html>
