@@ -47,6 +47,7 @@ var List = Vue.extend({
       return this.employees.filter(employee => {
         return employee.name.indexOf(this.searchKey) > -1
               || employee.salary.indexOf(this.searchKey) > -1
+              || employee.id.indexOf(this.searchKey) > 1
       });
     }
   },
@@ -65,7 +66,7 @@ var AddEmployee = Vue.extend({
     };
   },
   methods: {
-    addEmployee() {
+    addEmployee: function() {
       employeeService.addEmployee(this.employee, r => router.push('/'));
     }
   },
@@ -73,20 +74,23 @@ var AddEmployee = Vue.extend({
 var UpdateEmployee = Vue.extend({
   template: '#employee-edit',
   data: function() {
-    return { employee: employeeService.findById(this.$route.params.employee_id) };
+    return { employee: {id: '', name: '', salary: 0} };
   },
   methods: {
     updateEmployee: function() {
       employeeService.updateEmployee(this.employee.id, this.employee, r => router.push('/'));
     }
   },
+  mounted() {
+    employeeService.findById(this.$route.params.employee_id, r => { this.employee = r.data; employee = r.data });
+  }
 });
 
 var router = new VueRouter({
   routes: [
     { path: '/', component: List },
     { path: '/add-employee', component: AddEmployee },
-    { path: '/:employee_id/edit', component: UpdateEmployee, name: 'employee-edit' },
+    { path: '/:employee_id/edit', component: UpdateEmployee },
   ],
 });
 new Vue({

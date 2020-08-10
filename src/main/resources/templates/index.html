@@ -42,7 +42,7 @@
                     <td>{{employee.salary}}</td>
                     <td>
                         <a class="btn btn-warning btn-xs">
-                            <router-link :to="{name: 'employee-edit',params: {employee_id:employee.id}}">Edit
+                            <router-link :to="{path: '/'+employee.id+'/edit'}">Edit
                             </router-link>
                         </a>
                     </td>
@@ -55,7 +55,7 @@
     <template id="employee-add">
         <div>
             <h2>Add Employee</h2>
-            <form @onSubmit="addEmployee">
+            <form @submit="addEmployee">
                 <div class="form-group">
                     <label for="add-name">Name</label>
                     <input class="form-control" id="add-name" v-model="employee.name" required />
@@ -79,7 +79,7 @@
     <template id="employee-edit">
         <div>
             <h2>Edit Employee</h2>
-            <form @onSubmit="updateEmployee">
+            <form @submit="updateEmployee">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" v-model="employee.name" required />
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                     <a class="btn btn-default">
                         <router-link to="/">Cancel</router-link>
                     </a>
